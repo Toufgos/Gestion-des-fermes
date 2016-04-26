@@ -44,24 +44,27 @@ public class test {
 	public static void main(String[] args) {
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				new String[] { "DaoAndMetierBeans.xml" });
+				new String[] { "applicationContext.xml" });
 		System.out.println("hhhhhhhhhhhhhhhhhhhh");
 		Metier m = (Metier) context.getBean("metier");
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRANCE);
-		String formatteDate = dateFormat.format(new Date());
-		System.out.println(formatteDate);
-		
-		try {
-			List<Ferme> fermes= m.FindFermeDoesNotRegistreClimat(new Date());
-			for (Ferme f : fermes) {
-				System.out.println(f.getId_Ferme()+" "+ f.getNom_Ferme()+"  pas encore ");
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRANCE);
+//		String formatteDate = dateFormat.format(new Date());
+//		System.out.println(formatteDate);
+//		
+//		try {
+//			List<Ferme> fermes= m.FindFermeDoesNotRegistreClimat(new Date());
+//			for (Ferme f : fermes) {
+//				System.out.println(f.getId_Ferme()+" "+ f.getNom_Ferme()+"  pas encore ");
+//			}
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		Ferme f = new Ferme("Ferme26", "adresse26", "proprietaire_ferme26", "ville_ferme26", 26262.6);
+		m.add(f);
+		f=m.FindFermeById(f.getId_Ferme());
+		System.out.println(f.getNom_Ferme()+"est ajoutée à la base avec succes");
 		
 		 
 		 

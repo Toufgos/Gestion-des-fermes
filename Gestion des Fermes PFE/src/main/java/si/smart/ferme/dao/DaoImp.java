@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import si.smart.ferme.entities.Activite;
@@ -42,10 +43,12 @@ import si.smart.ferme.entitiesHistory.PersonnelHistory;
 import si.smart.ferme.entitiesHistory.SousFamilleHistory;
 import si.smart.ferme.entitiesHistory.VarieteHistory;
 
-
+@Repository
 public class DaoImp implements Dao{
 	
-	
+	public DaoImp() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	@PersistenceContext
 	private EntityManager em;

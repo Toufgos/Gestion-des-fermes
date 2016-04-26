@@ -34,6 +34,7 @@ import si.smart.ferme.entities.Plantation;
 import si.smart.ferme.entities.SousFamille;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.metier.Metier;
+import si.smart.ferme.metier.MetierImp;
 import si.smart.ferme.models.ClimatologieForm;
 import si.smart.ferme.models.FamilleForm;
 import si.smart.ferme.models.FermeForm;
@@ -43,8 +44,9 @@ import si.smart.ferme.models.ParcellaireFomr;
 @Controller
 public class EmployeController {
 	
-	//@Autowired
+	@Autowired
 	private Metier metier;
+	
 	
 	
 	

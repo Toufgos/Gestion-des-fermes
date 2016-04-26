@@ -41,7 +41,7 @@ public class etatSynthese extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("je suis dans la servlet de l'etat de synthèse");
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		Metier metier = (Metier) ctx.getBean("metier");
 		long id = Long.parseLong(request.getParameter("id"));

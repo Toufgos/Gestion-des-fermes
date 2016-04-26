@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import si.smart.ferme.dao.Dao;
+import si.smart.ferme.dao.DaoImp;
 import si.smart.ferme.entities.Activite;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.CoordonnesGPS;
@@ -50,10 +51,14 @@ public class MetierImp implements Metier{
 	public void setDao(Dao dao) {
 		this.dao = dao;
 	}
-	
+
 	public MetierImp() {
-		System.out.println("metier is just created");
-		
+		// TODO Auto-generated constructor stub
+	}
+	
+	public MetierImp(Dao dao) {
+		//System.out.println("metier is just created");
+		this.dao= dao;
 	
 	}
 	

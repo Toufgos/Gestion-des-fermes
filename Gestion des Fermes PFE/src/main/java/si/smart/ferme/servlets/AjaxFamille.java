@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -21,7 +22,8 @@ import si.smart.ferme.metier.Metier;
 public class AjaxFamille extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-       
+	@Autowired
+	private Metier metier;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -36,9 +38,9 @@ public class AjaxFamille extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml"});
-		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		Metier metier = (Metier) ctx.getBean("metier");
-		
+//		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+//		Metier metier = (Metier) ctx.getBean("metier");
+//		
 		String res="";
 		//String type="";
 		//type= request.getParameter("work");

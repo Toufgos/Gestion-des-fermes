@@ -21,6 +21,7 @@ import si.smart.ferme.metier.Metier;
  */
 public class TestAja extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
