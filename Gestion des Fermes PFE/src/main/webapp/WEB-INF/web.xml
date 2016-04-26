@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<display-name>TestAjax</display-name>
+		<servlet-name>TestAjax</servlet-name>
+		<servlet-class>TestAjax</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestAjax</servlet-name>
+		<url-pattern>/TestAjax</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>TestAja</display-name>
+		<servlet-name>TestAja</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.TestAja</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestAja</servlet-name>
+		<url-pattern>/TestAja</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>MapPoint</display-name>
+		<servlet-name>MapPoint</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.MapPoint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MapPoint</servlet-name>
+		<url-pattern>/MapPoint</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>GetCoor</display-name>
+		<servlet-name>GetCoor</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.GetCoor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetCoor</servlet-name>
+		<url-pattern>/GetCoor</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>AjaxFamille</display-name>
+		<servlet-name>AjaxFamille</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.AjaxFamille</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjaxFamille</servlet-name>
+		<url-pattern>/AjaxFamille</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ParceCoor</display-name>
+		<servlet-name>ParceCoor</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.ParceCoor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ParceCoor</servlet-name>
+		<url-pattern>/ParceCoor</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>UpdateEntite</display-name>
+		<servlet-name>UpdateEntite</servlet-name>
+		<servlet-class>si.smart.ferme.ajax.UpdateEntite</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateEntite</servlet-name>
+		<url-pattern>/UpdateEntite</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>InitialiserEntite</display-name>
+		<servlet-name>InitialiserEntite</servlet-name>
+		<servlet-class>si.smart.ferme.ajax.InitialiserEntite</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InitialiserEntite</servlet-name>
+		<url-pattern>/InitialiserEntite</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>RemoveEntite</display-name>
+		<servlet-name>RemoveEntite</servlet-name>
+		<servlet-class>si.smart.ferme.ajax.RemoveEntite</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveEntite</servlet-name>
+		<url-pattern>/RemoveEntite</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>etatSynthese</display-name>
+		<servlet-name>etatSynthese</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.etatSynthese</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>etatSynthese</servlet-name>
+		<url-pattern>/etatSynthese</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>AjaxSousFamille</display-name>
+		<servlet-name>AjaxSousFamille</servlet-name>
+		<servlet-class>si.smart.ferme.servlets.AjaxSousFamille</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjaxSousFamille</servlet-name>
+		<url-pattern>/AjaxSousFamille</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>TestAtmosphere</display-name>
+		<servlet-name>TestAtmosphere</servlet-name>
+		<servlet-class>si.smart.ferme.controllers.TestAtmosphere</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestAtmosphere</servlet-name>
+		<url-pattern>/TestAtmosphere</url-pattern>
+	</servlet-mapping>
+
+
+</web-app>
