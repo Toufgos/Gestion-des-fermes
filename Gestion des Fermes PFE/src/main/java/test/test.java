@@ -44,7 +44,7 @@ public class test {
 	public static void main(String[] args) {
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				new String[] { "applicationContext.xml" });
+				new String[] { "DaoAndMetierBeans.xml" });
 		System.out.println("hhhhhhhhhhhhhhhhhhhh");
 		Metier m = (Metier) context.getBean("metier");
 		
