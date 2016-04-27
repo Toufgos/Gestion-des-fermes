@@ -250,6 +250,9 @@
                                 <li><a><i class="fa fa-bug"></i> Exemple Pages <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
                                     	<li><a href="  <c:url value="EtatSynthese" />" >Etat de synthèse</a>
+                                    	<li><a href="  <c:url value="ajouterProduit" />" >ajouter Produit</a>
+                                    	<li><a href="  <c:url value="listerProduits" />" >listerProduits</a>
+                                    	
                                         <li><a href="  <c:url value="error404" />" >exemple</a>
                                         </li>
                                     </ul>

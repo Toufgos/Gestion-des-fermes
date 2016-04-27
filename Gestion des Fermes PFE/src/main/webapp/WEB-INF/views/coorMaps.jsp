@@ -305,8 +305,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     		    title: 'Succée !',
                     		    text: responseJson,
                     		    type: 'success'
+                    		  
                     		});
-
+                    	 document.location.reload();
                      });
                  
                     setTimeout(function(){ $('#ajaxGetUserServletResponse').remove(); alert("rederiction"); }, 10000);

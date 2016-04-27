@@ -22,7 +22,8 @@ public class Fournisseur {
 	private String tel;
 	@Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
 	private String email;
-
+	private String type;
+	
 	
 	public Fournisseur() {
 		super();
@@ -85,9 +86,9 @@ public class Fournisseur {
 
 
 	public void setTel(String tel) {
-		String s="^$[0-9]{10}";
+		String s="[0-9]{10}";
 		java.util.regex.Pattern pattern= java.util.regex.Pattern.compile(s);
-		Matcher matcher =  pattern.matcher(email);
+		Matcher matcher =  pattern.matcher(tel);
 		if( matcher.matches())
 		this.tel = tel;
 		else {
@@ -115,6 +116,18 @@ public class Fournisseur {
 			
 		
 		
+	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 //

@@ -19,6 +19,7 @@ import si.smart.ferme.entities.CategorieProduit;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
+import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
 import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Occupation;
@@ -28,6 +29,7 @@ import si.smart.ferme.entities.ParcellaireIrregue;
 import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
+import si.smart.ferme.entities.Traitement;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ClimatologieHistory;
 import si.smart.ferme.entitiesHistory.FamilleHistory;
@@ -50,21 +52,8 @@ public class test {
 		System.out.println("hhhhhhhhhhhhhhhhhhhh");
 		Metier m = (Metier) context.getBean("metier");
 		
-		CategorieProduit c = new CategorieProduit("nouvelleCategorie2", "il s'agit d'une categorie de test2");
-		m.add(c);
-		c=m.FindCategorieProduitById(c.getId());
-		System.out.println(c.getId()+" : "+c.getNom()+" : "+c.getDescription());
-//		c.setNom(c.getNom()+" updated");
-//		c.setDescription(c.getDescription()+" updated");
-//		m.update(c);
-		Produit p= new Produit("New Product", "it's a new product", 100.23);
-		m.add(p,m.FindCategorieProduitById(1L));
-		p=m.FindProduitById(p.getId());
-		System.out.println(p.getLibelle()+"  apartient à la categorie "+p.getCategorie().getNom());
-		p.setCategorie(c);
-		p.setCMUPunitare(100.00);
-		p.setQuatiteEnStock(300.0);
-		m.update(p,c);
+		Traitement t= m.FindTraitementById(1L);
+		System.out.println(m.Remove(t));
 		System.out.println("we are done !");
 		
 		

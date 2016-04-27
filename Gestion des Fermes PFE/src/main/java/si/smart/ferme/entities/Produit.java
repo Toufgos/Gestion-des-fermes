@@ -18,16 +18,28 @@ public class Produit {
 	@Column(columnDefinition="text")
 	private String descreption;
 	private double quantiteMinAuStock;
-	private double quatiteEnStock;
+	private double quantiteEnStock;
 	private double CMUPunitare;
+	private double pu;
+	
+//	@OneToMany(mappedBy="produit")
+//	private List<Mouvement> mouvements;
+	
 	@ManyToOne
 	private CategorieProduit categorie;
 	
-	public double getQuatiteEnStock() {
-		return quatiteEnStock;
+	
+	public double getPu() {
+		return pu;
 	}
-	public void setQuatiteEnStock(double quatiteEnStock) {
-		this.quatiteEnStock = quatiteEnStock;
+	public void setPu(double pu) {
+		this.pu = pu;
+	}
+	public double getQuantiteEnStock() {
+		return quantiteEnStock;
+	}
+	public void setQuantiteEnStock(double quantiteEnStock) {
+		this.quantiteEnStock = quantiteEnStock;
 	}
 	public double getCMUPunitare() {
 		return CMUPunitare;

@@ -10,13 +10,16 @@ import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.CoordonnesGPS;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
+import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
 import si.smart.ferme.entities.ModeIrreguation;
+import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
+import si.smart.ferme.entities.Traitement;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ActiviteHistory;
 import si.smart.ferme.entitiesHistory.ClimatologieHistory;
@@ -75,6 +78,29 @@ public interface Metier {
  	public Produit FindProduitById(long id);
  	public Produit update(Produit p, CategorieProduit c);
  	public String Remove(Produit p);
+ 	
+ 	
+ 	public Fournisseur add(Fournisseur f);
+ 	public List<Fournisseur> FindAllFournisseur();
+ 	public Fournisseur FindFournisseurById(long id);
+ 	public Fournisseur update(Fournisseur f);
+ 	public String Remove(Fournisseur f);
+ 	
+ 	
+ 	public Traitement add(Traitement t,Produit p, Parcellaire pr);
+ 	public List<Traitement> FindAllTraitement();
+ 	public Traitement FindTraitementById(long id);
+ 	public Traitement update(Traitement t,Produit p, Parcellaire pr);
+ 	public String Remove(Traitement t);
+ 	
+ 	
+ 	
+ 	public Mouvement add(Mouvement m, Ferme f);
+ 	public List<Mouvement> FindAllMouvement();
+ 	public Mouvement FindMouvementById(long id);
+ 	public Mouvement update(Mouvement m, Ferme f);
+ 	public String Remove(Mouvement f);
+ 	
  	
 	public Groupe update(Groupe g);
 	public Personnel update(Personnel g);

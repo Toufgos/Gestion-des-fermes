@@ -22,8 +22,10 @@ import si.smart.ferme.entities.CoordonnesGPS;
 import si.smart.ferme.entities.Culture;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
+import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
 import si.smart.ferme.entities.ModeIrreguation;
+import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.ParcellaireBour;
@@ -32,6 +34,7 @@ import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Plantation;
 import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
+import si.smart.ferme.entities.Traitement;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ActiviteHistory;
 import si.smart.ferme.entitiesHistory.ClimatologieHistory;
@@ -1401,27 +1404,27 @@ public class DaoImp implements Dao{
 
 	@Override
 	public List<Produit> FindAllProduit() {
-		Query req=em.createQuery("SELECT p From Produit");
+		Query req=em.createQuery("SELECT p From Produit p");
 		
 		return req.getResultList();
 	}
 
 	@Override
 	public Produit FindProduitById(long id) {
-		// TODO Auto-generated method stub
+		
 		return em.find(Produit.class, id);
 	}
 
 	@Override
 	public Produit update(Produit p, CategorieProduit c) {
-		// TODO Auto-generated method stub
+		
 		Produit newp= em.find(Produit.class, p.getId());
 		CategorieProduit newc= em.find(CategorieProduit.class, c.getId());
 		newp.setCategorie(newc);
 		newp.setDescreption(p.getDescreption());
 		newp.setLibelle(p.getLibelle());
 		newp.setQuantiteMinAuStock(p.getQuantiteMinAuStock());
-		newp.setQuatiteEnStock(p.getQuatiteEnStock());
+		newp.setQuantiteEnStock(p.getQuantiteEnStock());
 		newp.setCMUPunitare(p.getCMUPunitare());
 		em.persist(newp);
 		em.merge(newc);
@@ -1430,15 +1433,166 @@ public class DaoImp implements Dao{
 
 	@Override
 	public String Remove(Produit p) {
-		// TODO Auto-generated method stub
+		
 		p=em.find(Produit.class, p.getId());
 		if(p!=null){
-			p.setQuatiteEnStock(0.0);
+			p.setQuantiteEnStock(0.0);
 			p.setCategorie(null);
 			em.remove(p);
 			return "Produit supprimer avec succés !";
 		}
 		return "impossible de supprimer ce produit!";
+	}
+
+	@Override
+	public Fournisseur add(Fournisseur f) {
+		em.persist(f);
+		return em.find(Fournisseur.class , f.getId());
+	}
+
+	@Override
+	public List<Fournisseur> FindAllFournisseur() {
+		Query req=em.createQuery("SELECT f FROM Fournisseur f");
+		return req.getResultList();
+	}
+
+	@Override
+	public Fournisseur FindFournisseurById(long id) {
+		
+		return em.find(Fournisseur.class, id);
+	}
+
+	@Override
+	public Fournisseur update(Fournisseur f) {
+		
+		Fournisseur fe= em.find(Fournisseur.class, f.getId());
+		fe.setAdresse(f.getAdresse());
+		fe.setEmail(f.getEmail());
+		fe.setNom(f.getNom());
+		fe.setTel(f.getTel());
+		em.persist(fe);
+		return em.find(Fournisseur.class, fe.getId());
+	}
+
+	@Override
+	public String Remove(Fournisseur f) {
+		
+		String s="impossible de suprimer ce fournisseur";
+		try {
+			em.remove(f);
+			s="ce fournisseur est suprimé avec succés";
+		} catch (Exception e) {
+			s="impossible de suprimer ce fournisseur";
+		}
+		
+		return s;
+	}
+
+	@Override
+	public Traitement add(Traitement t, Produit p, Parcellaire pr) {
+		 p= em.find(Produit.class, p.getId());
+		 pr= em.find(Parcellaire.class, pr.getId_parce());
+		t.setProduit(p);
+		t.setParcellaire(pr);
+		em.merge(p);
+		em.merge(pr);
+		em.persist(t);
+		return em.find(Traitement.class, t.getId());
+		
+	}
+
+	@Override
+	public List<Traitement> FindAllTraitement() {
+		Query req=em.createQuery("SELECT t From Traitement t ");
+		return req.getResultList();
+	}
+
+	@Override
+	public Traitement FindTraitementById(long id) {
+		
+		return em.find(Traitement.class, id);
+	}
+
+	@Override
+	public Traitement update(Traitement t, Produit p, Parcellaire pr) {
+		 p= em.find(Produit.class, p.getId());
+		 pr= em.find(Parcellaire.class, pr.getId_parce());
+		Traitement nt=em.find(Traitement.class, t.getId());
+		nt.setProduit(p);
+		nt.setParcellaire(pr);
+		nt.setDateDeTraitement(t.getDateDeTraitement());
+		nt.setQuantite(t.getQuantite());
+		em.merge(p);
+		em.merge(pr);
+		em.persist(nt);
+		return em.find(Traitement.class, t.getId());
+		
+	}
+
+	@Override
+	public String Remove(Traitement t) {
+
+		String s="impossible de suprimer ce Traitement";
+		try {
+			t=em.find(Traitement.class, t.getId());
+			t.setParcellaire(null);
+			t.setProduit(null);
+			em.merge(t);
+			em.remove(t);
+			s="ce Traitement est suprimé avec succés";
+		} catch (Exception e) {
+			s="impossible de suprimer ce Traitement";
+		}
+		
+		return s;
+	}
+
+	@Override
+	public Mouvement add(Mouvement m,Ferme f) {
+		f=em.find(Ferme.class, f.getId_Ferme());
+		m.setFerme(f);
+		em.persist(m);
+		em.merge(f);
+		return em.find(Mouvement.class, m.getId());
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvement() {
+		Query req= em.createQuery("SELECT m FROM Mouvement m");
+		return req.getResultList();
+	}
+
+	@Override
+	public Mouvement FindMouvementById(long id) {
+		
+		return em.find(Mouvement.class, id);
+	}
+
+	@Override
+	public Mouvement update(Mouvement m, Ferme f) {
+		Mouvement nm= em.find(Mouvement.class, m.getId());
+		f=em.find(Ferme.class, f.getId_Ferme());
+		nm.setDate(m.getDate());
+		nm.setFerme(f);
+		nm.setNumMouvement(m.getNumMouvement());
+		nm.setReference(m.getReference());
+		nm.setType(m.getType());
+		em.persist(nm);
+		em.merge(f);
+		return em.find(Mouvement.class, m.getId());
+	}
+
+	@Override
+	public String Remove(Mouvement f) {
+		String s="impossible de suprimer ce Mouvement";
+		try {
+			em.remove(f);
+			s="ce Mouvement est suprimé avec succés";
+		} catch (Exception e) {
+			s="impossible de suprimer ce Mouvement";
+		}
+		
+		return s;
 	}
 
 

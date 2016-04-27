@@ -21,13 +21,16 @@ import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.CoordonnesGPS;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
+import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
 import si.smart.ferme.entities.ModeIrreguation;
+import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
+import si.smart.ferme.entities.Traitement;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ActiviteHistory;
 import si.smart.ferme.entitiesHistory.ClimatologieHistory;
@@ -737,14 +740,104 @@ public class MetierImp implements Metier{
 
 	@Override
 	public Produit update(Produit p, CategorieProduit c) {
-		// TODO Auto-generated method stub
+		
 		return dao.update(p, c);
 	}
 
 	@Override
 	public String Remove(Produit p) {
-		// TODO Auto-generated method stub
+		
 		return dao.Remove(p);
+	}
+
+	@Override
+	public Fournisseur add(Fournisseur f) {
+		//
+		return dao.add(f);
+	}
+
+	@Override
+	public List<Fournisseur> FindAllFournisseur() {
+		
+		return dao.FindAllFournisseur();
+	}
+
+	@Override
+	public Fournisseur FindFournisseurById(long id) {
+		
+		return dao.FindFournisseurById(id);
+	}
+
+	@Override
+	public Fournisseur update(Fournisseur f) {
+		
+		return dao.update(f);
+	}
+
+	@Override
+	public String Remove(Fournisseur f) {
+		
+		return dao.Remove(f);
+	}
+
+	@Override
+	public Traitement add(Traitement t, Produit p, Parcellaire pr) {
+		// 
+		return dao.add(t, p, pr);
+	}
+
+	@Override
+	public List<Traitement> FindAllTraitement() {
+		// 
+		return dao.FindAllTraitement();
+	}
+
+	@Override
+	public Traitement FindTraitementById(long id) {
+		// 
+		return dao.FindTraitementById(id);
+	}
+
+	@Override
+	public Traitement update(Traitement t, Produit p, Parcellaire pr) {
+		// 
+		return dao.update(t, p, pr);
+	}
+
+	@Override
+	public String Remove(Traitement t) {
+		// 
+		return dao.Remove(t);
+	}
+
+	@Override
+	public Mouvement add(Mouvement m, Ferme f) {
+		// 
+		return dao.add(m, f);
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvement() {
+		
+		return dao.FindAllMouvement();
+	}
+
+	@Override
+	public Mouvement FindMouvementById(long id) {
+		// 
+		return dao.FindMouvementById(id);
+	}
+
+	@Override
+	public Mouvement update(Mouvement m, Ferme f) {
+		// 
+		return dao.update(m, f);
+	}
+
+	@Override
+	public String Remove(Mouvement f) {
+		// 
+		return dao.Remove(f);
 	}										
 
 //	public void setDao(Dao dao) {

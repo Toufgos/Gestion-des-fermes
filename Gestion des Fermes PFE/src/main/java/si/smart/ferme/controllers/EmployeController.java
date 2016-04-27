@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import si.smart.ferme.dao.Dao;
 import si.smart.ferme.entities.Activite;
+import si.smart.ferme.entities.CategorieProduit;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.Culture;
 import si.smart.ferme.entities.Famille;
@@ -31,6 +32,7 @@ import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.ParcellaireIrregue;
 import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Plantation;
+import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.metier.Metier;
@@ -659,6 +661,42 @@ public class EmployeController {
 		}
 		
 		return "ajouterSousFamille";
+	}
+	
+	@RequestMapping("/ajouterProduit")
+	public String ajouterProduit(Model model, ParcellaireFomr pf , HttpServletRequest request, HttpSession session){
+		List<CategorieProduit> categories= metier.FindAllCategorieProduit();
+		model.addAttribute("categories", categories);
+		try {
+			
+			if ( pf.getSubmit().equals("Ajouter") ){
+				System.out.println(pf.getSubmit());
+				pf.setSubmit(null);
+				System.out.println("voici l id de l activité : "+ pf.getId_ferme()); //id_Ferme === id_Categorie
+				CategorieProduit c= metier.FindCategorieProduitById(pf.getId_ferme());
+				Produit p= new Produit();
+				p.setPu(pf.getS_inculte()); //s_inculte === prix unitaire
+				p.setCMUPunitare(0.0);
+				p.setLibelle(pf.getLibelle());
+				p.setDescreption(pf.getMode());  // mode === description
+				p.setQuantiteEnStock(0.0);  
+				p.setQuantiteMinAuStock(pf.getS_brute()); // s_incule === quantité Minimal au stock 
+				//metier.add(f);
+				metier.add(p,c);
+				System.out.println("here");
+				return "listerProduits";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "ajouterProduit";
+	}
+	
+	@RequestMapping("/listerProduits")
+	public String listerProduits(Model model, HttpServletRequest request, HttpSession session){
+		List<Produit> produits= metier.FindAllProduit();
+		model.addAttribute("produits", produits);
+		return "listerProduits";
 	}
 	
 	@RequestMapping("/ajouterVariete")
