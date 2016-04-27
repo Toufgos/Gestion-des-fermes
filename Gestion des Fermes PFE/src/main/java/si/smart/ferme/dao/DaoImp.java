@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import si.smart.ferme.entities.Activite;
+import si.smart.ferme.entities.CategorieProduit;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.CoordonnesGPS;
 import si.smart.ferme.entities.Culture;
@@ -29,6 +30,7 @@ import si.smart.ferme.entities.ParcellaireBour;
 import si.smart.ferme.entities.ParcellaireIrregue;
 import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Plantation;
+import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ActiviteHistory;
@@ -1094,9 +1096,11 @@ public class DaoImp implements Dao{
 	@Override
 	public Climatologie add(Climatologie c, Ferme f) {
 		
+		System.out.println("je suis here je sais pas prk ça marche pas fl controlleur");
 		Ferme fe= em.find(Ferme.class, f.getId_Ferme());
 		c.setFerme(fe);
 		em.persist(c);
+		em.merge(fe);
 		return FindClimatologieById(c.getId());
 	}
 
@@ -1316,7 +1320,7 @@ public class DaoImp implements Dao{
 		try {
 			date= df.parse(d);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			
 			d= df.format(new Date());
 			date= df.parse(d);
 			e.printStackTrace();
@@ -1331,6 +1335,110 @@ public class DaoImp implements Dao{
 			}
 		}
 		return fermesOK;
+	}
+
+	@Override
+	public CategorieProduit add(CategorieProduit c) {
+		em.persist(c);
+		return em.find(CategorieProduit.class, c.getId());
+	}
+
+	@Override
+	public List<CategorieProduit> FindAllCategorieProduit() {
+		// TODO Auto-generated method stub
+		Query req= em.createQuery("SELECT c FROM CategorieProduit c");
+		return req.getResultList();
+	}
+
+	@Override
+	public CategorieProduit FindCategorieProduitById(long id) {
+		// TODO Auto-generated method stub
+		return em.find(CategorieProduit.class, id);
+	}
+
+	@Override
+	public CategorieProduit update(CategorieProduit c) {
+		
+		CategorieProduit newc= em.find(CategorieProduit.class, c.getId());
+		newc.setDescription(c.getDescription());
+		newc.setNom(c.getNom());
+		em.persist(newc);
+		return em.find(CategorieProduit.class, newc.getId());
+	}
+
+	@Override
+	public String Remove(CategorieProduit c) {
+		
+		Query query = em.createQuery("Select p from Produit p where p.categorie.id = ?");
+		query.setParameter(1, c.getId());
+		List<Produit> produits = query.getResultList();
+		if( CollectionUtils.isEmpty(produits ) ) {
+			em.remove(em.contains(c) ? c : em.merge(c));
+			//em.remove(a);
+			return "Categorie de Produit supprimée avec succés !";
+		}
+		
+		return "impossible de supprimer cette ategorie de Produit !";
+		
+		
+	}
+
+	@Override
+	public Produit add(Produit p) {
+		
+		em.persist(p);
+		return em.find(Produit.class, p.getId());
+	}
+
+	@Override
+	public Produit add(Produit p, CategorieProduit c) {
+		CategorieProduit ce= em.find(CategorieProduit.class, c.getId());
+		p.setCategorie(ce);
+		em.persist(p);
+		em.merge(ce);
+		return em.find(Produit.class, p.getId());
+	}
+
+	@Override
+	public List<Produit> FindAllProduit() {
+		Query req=em.createQuery("SELECT p From Produit");
+		
+		return req.getResultList();
+	}
+
+	@Override
+	public Produit FindProduitById(long id) {
+		// TODO Auto-generated method stub
+		return em.find(Produit.class, id);
+	}
+
+	@Override
+	public Produit update(Produit p, CategorieProduit c) {
+		// TODO Auto-generated method stub
+		Produit newp= em.find(Produit.class, p.getId());
+		CategorieProduit newc= em.find(CategorieProduit.class, c.getId());
+		newp.setCategorie(newc);
+		newp.setDescreption(p.getDescreption());
+		newp.setLibelle(p.getLibelle());
+		newp.setQuantiteMinAuStock(p.getQuantiteMinAuStock());
+		newp.setQuatiteEnStock(p.getQuatiteEnStock());
+		newp.setCMUPunitare(p.getCMUPunitare());
+		em.persist(newp);
+		em.merge(newc);
+		return em.find(Produit.class, newp.getId());
+	}
+
+	@Override
+	public String Remove(Produit p) {
+		// TODO Auto-generated method stub
+		p=em.find(Produit.class, p.getId());
+		if(p!=null){
+			p.setQuatiteEnStock(0.0);
+			p.setCategorie(null);
+			em.remove(p);
+			return "Produit supprimer avec succés !";
+		}
+		return "impossible de supprimer ce produit!";
 	}
 
 

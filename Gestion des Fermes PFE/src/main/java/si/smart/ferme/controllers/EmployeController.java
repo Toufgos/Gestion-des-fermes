@@ -78,25 +78,25 @@ public class EmployeController {
 		model.addAttribute("cf", new ClimatologieForm());
 		try {
 			if(cf.getSubmit().equals("ajouterClimat")){
-				System.out.println("we are here");
+				System.out.println("Controlleur de l'ajout de climatologie a commencé son travail");
 				cf.setSubmit(null);
 				System.out.println(cf.getDate()+" "+cf.getPluie()+" "+cf.getFerme()+" "+cf.getTemperature());
+				System.out.println("voici les données saisi dans le formulaire :");
+				System.out.println("Date : "+cf.getDate());
+				System.out.println("Pluie : "+cf.getPluie());
+				System.out.println("Ferme : "+cf.getFerme());
+				System.out.println("Temperature : "+cf.getTemperature());
 				System.out.println("on est pret pour ajouter une climat");
 				Climatologie c = new Climatologie();
 				Ferme f= metier.FindFermeById(cf.getFerme());
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				Date d= df.parse(cf.getDate());
 				d=df.parse(df.format(d));
-				System.out.println("Voici la date "+d);
-				System.out.println("Month is "+d.getMonth());
-				
-				System.out.println("1");
 				c.setDate(d);
-				System.out.println("2");
 				c.setPluie(cf.getPluie());
-				System.out.println("3");
 				c.setTemperature(cf.getTemperature());
-				System.out.println("on est pret pour ajouter une climat");
+				System.out.println("objet climatologie est crée !");
+				System.out.println(" voici l'objet : "+c.getPluie()+" "+c.getTemperature()+" "+c.getDate());
 				metier.add(c,f);
 				System.out.println(c.getDate()+" "+c.getPluie()+" "+c.getFerme()+" "+c.getTemperature());
 				System.out.println("climat doit etre ajouté à la base");

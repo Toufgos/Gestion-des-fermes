@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import si.smart.ferme.dao.Dao;
 import si.smart.ferme.dao.DaoImp;
 import si.smart.ferme.entities.Activite;
+import si.smart.ferme.entities.CategorieProduit;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.CoordonnesGPS;
 import si.smart.ferme.entities.Famille;
@@ -25,6 +26,7 @@ import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.Personnel;
+import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ActiviteHistory;
@@ -677,6 +679,72 @@ public class MetierImp implements Metier{
 	public List<Ferme> FindFermeDoesNotRegistreClimat(Date date) throws ParseException {
 	
 		return dao.FindFermeDoesNotRegistreClimat(date);
+	}
+
+	@Override
+	public CategorieProduit add(CategorieProduit c) {
+		
+		return dao.add(c);
+	}
+
+	@Override
+	public List<CategorieProduit> FindAllCategorieProduit() {
+		
+		return dao.FindAllCategorieProduit();
+	}
+
+	@Override
+	public CategorieProduit FindCategorieProduitById(long id) {
+		
+		return dao.FindCategorieProduitById(id);
+	}
+
+	@Override
+	public CategorieProduit update(CategorieProduit c) {
+		
+		return dao.update(c);
+	}
+
+	@Override
+	public String Remove(CategorieProduit c) {
+		
+		return dao.Remove(c);
+	}
+
+	@Override
+	public Produit add(Produit p) {
+		
+		return dao.add(p);
+	}
+
+	@Override
+	public Produit add(Produit p, CategorieProduit c) {
+		
+		return dao.add(p, c);
+	}
+
+	@Override
+	public List<Produit> FindAllProduit() {
+		
+		return dao.FindAllProduit();
+	}
+
+	@Override
+	public Produit FindProduitById(long id) {
+		
+		return dao.FindProduitById(id);
+	}
+
+	@Override
+	public Produit update(Produit p, CategorieProduit c) {
+		// TODO Auto-generated method stub
+		return dao.update(p, c);
+	}
+
+	@Override
+	public String Remove(Produit p) {
+		// TODO Auto-generated method stub
+		return dao.Remove(p);
 	}										
 
 //	public void setDao(Dao dao) {

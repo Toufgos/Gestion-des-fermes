@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javassist.compiler.ast.Variable;
 import si.smart.ferme.entities.Activite;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.Variete;
 import si.smart.ferme.metier.Metier;
 
 /**
@@ -99,7 +101,9 @@ public class RemoveEntite extends HttpServlet {
 	
 	if(entite.equals("Variete")){
 		System.out.println(entite);
-		response.getWriter().println(entite);
+		//Variete v= metier.FindVarieteById(id);
+		//String s= metier.Remove(v);
+		response.getWriter().println("we are done with this variete !");
 	
 }
 		System.out.println(id+" "+entite);

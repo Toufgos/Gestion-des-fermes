@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import si.smart.ferme.entities.Activite;
+import si.smart.ferme.entities.CategorieProduit;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.CoordonnesGPS;
 import si.smart.ferme.entities.Famille;
@@ -14,6 +15,7 @@ import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.Personnel;
+import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ActiviteHistory;
@@ -61,7 +63,18 @@ public interface Metier {
  	public List<Climatologie> FindClimatologiesByFerme(Ferme f);
  	public Climatologie FindClimatologieById(long a);
  	public void Add(ActiviteHistory a);
+ 	public CategorieProduit add(CategorieProduit c);
+ 	public List<CategorieProduit> FindAllCategorieProduit();
+ 	public CategorieProduit FindCategorieProduitById(long id);
+ 	public CategorieProduit update(CategorieProduit c);
+ 	public String Remove(CategorieProduit c);
  	
+ 	public Produit add(Produit p);
+ 	public Produit add(Produit p, CategorieProduit c);
+ 	public List<Produit> FindAllProduit();
+ 	public Produit FindProduitById(long id);
+ 	public Produit update(Produit p, CategorieProduit c);
+ 	public String Remove(Produit p);
  	
 	public Groupe update(Groupe g);
 	public Personnel update(Personnel g);

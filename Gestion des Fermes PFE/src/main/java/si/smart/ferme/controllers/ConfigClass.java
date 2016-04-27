@@ -6,12 +6,14 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import si.smart.ferme.dao.Dao;
 import si.smart.ferme.dao.DaoImp;
 import si.smart.ferme.metier.Metier;
 import si.smart.ferme.metier.MetierImp;
 
+@EnableTransactionManagement
 @Configuration
 public class ConfigClass {
 

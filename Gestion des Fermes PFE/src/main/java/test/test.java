@@ -15,6 +15,7 @@ import org.springframework.core.io.FileSystemResource;
 
 import si.smart.ferme.dao.Dao;
 import si.smart.ferme.entities.Activite;
+import si.smart.ferme.entities.CategorieProduit;
 import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
@@ -25,6 +26,7 @@ import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.ParcellaireBour;
 import si.smart.ferme.entities.ParcellaireIrregue;
 import si.smart.ferme.entities.Personnel;
+import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.entitiesHistory.ClimatologieHistory;
@@ -48,25 +50,34 @@ public class test {
 		System.out.println("hhhhhhhhhhhhhhhhhhhh");
 		Metier m = (Metier) context.getBean("metier");
 		
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRANCE);
-//		String formatteDate = dateFormat.format(new Date());
-//		System.out.println(formatteDate);
-//		
-//		try {
-//			List<Ferme> fermes= m.FindFermeDoesNotRegistreClimat(new Date());
-//			for (Ferme f : fermes) {
-//				System.out.println(f.getId_Ferme()+" "+ f.getNom_Ferme()+"  pas encore ");
-//			}
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		CategorieProduit c = new CategorieProduit("nouvelleCategorie2", "il s'agit d'une categorie de test2");
+		m.add(c);
+		c=m.FindCategorieProduitById(c.getId());
+		System.out.println(c.getId()+" : "+c.getNom()+" : "+c.getDescription());
+//		c.setNom(c.getNom()+" updated");
+//		c.setDescription(c.getDescription()+" updated");
+//		m.update(c);
+		Produit p= new Produit("New Product", "it's a new product", 100.23);
+		m.add(p,m.FindCategorieProduitById(1L));
+		p=m.FindProduitById(p.getId());
+		System.out.println(p.getLibelle()+"  apartient à la categorie "+p.getCategorie().getNom());
+		p.setCategorie(c);
+		p.setCMUPunitare(100.00);
+		p.setQuatiteEnStock(300.0);
+		m.update(p,c);
+		System.out.println("we are done !");
+		
+		
+		
+		/*
 		Ferme f = new Ferme("Ferme26", "adresse26", "proprietaire_ferme26", "ville_ferme26", 26262.6);
 		m.add(f);
 		f=m.FindFermeById(f.getId_Ferme());
 		System.out.println(f.getNom_Ferme()+"est ajoutée à la base avec succes");
+		*/
 		
-		 
+		
+		
 		 
 /*		try {
 			SousFamille s = m.findSousFamillebyId(7L);

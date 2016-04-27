@@ -22,6 +22,11 @@
             $( "#waiting" ).dialog({
                 autoOpen: false,  
              });
+            
+            $( "#deleting" ).dialog({
+                autoOpen: false,  
+             });
+            
          });
       </script>
 		
@@ -141,12 +146,17 @@
 								</div>
 			<br/>	
 			<button id="submitUpdating">Modifier</button>
-			<button  id="submitDeleting">Supprimer</button>
+			
 		</div>
 		<div id="waiting" title="wait please !">
 				<p>Please wait</p>
 			<img class="test" src="http://loadingapng.com/templates/4/preview.gif" alt="waiting" width="100" height="100">
 		</div>
+		<div id="deleting" title="supression" style="display: table-cell; vertical-align: middle; text-align: center">
+			<p>Vous êtes sûre que vous voulez supprimer cette variété ? /p>
+			<button  id="submitDeleting">Supprimer</button>
+		</div>
+		
                     </div>
                 </div>
                 
@@ -216,12 +226,16 @@
             		 $("#waiting").dialog("close");
             		 location.reload();
             		 });
+            	 
+            	 
+            	 
             	 $("#submitDeleting").click(function(event){
             		 var idvar= $("#idUpdating").val();
             		 var entitevar="Variete";
             		 $("#dialogForUpdating").dialog("close");
             		 $("#waiting").dialog("open");
             		//alert(idvar+" "+entitevar);	
+            		alert("we are sending data to the controller");
             		 $.get('RemoveEntite', {
             	            id : idvar,
             	            entite : entitevar,
@@ -234,40 +248,14 @@
             		 $("#waiting").dialog("close");
             		 location.reload();
             		 });
+            	 
+            	 
             	 $(".remove").click(function(event){
             		 var idvar= $(this).prop("value");
             		 var entitevar="Variete";
-            		 $("#submitDeleting").show();
-            		 $("#submitUpdating").hide();
-            		    $("#dialogForUpdating").append('<img class="test" src="http://loadingapng.com/templates/4/preview.gif" alt="Smiley face" width="42" height="42">');
-            		 
-	       	    	    $("#libelleUpdating").hide();
-	       	    	    $("#observationUpdating").hide();
-	       	    	    $("#submitDeleting").hide();
-	       	    	    $(".hid").hide();
-            		 $.get('InitialiserEntite', {
-	          	            id : idvar,
-	          	            entite : entitevar,
-          	            
-			          	       }, function(response) {
-			          	    	   //alert(response);
-			          	    	    var res=response.split(":");
-			          	    	    var nul="null";
-			          	    	    $("img").remove(".test");
-			          	    	    $("#idUpdating").val(idvar);
-			          	    	    $("#libelleUpdating").val(res[0]);
-			          	    	    $("#observationUpdating").val(res[1]);
-			          	    	    $("#libelleUpdating").show();
-			       	    	        $("#observationUpdating").show();
-					       	    	$("#submitDeleting").show();
-					       	    	$(".hid").show();
-					       	    	$("img").remove(".test");
-			          	    	   $("#dialogForUpdating").dialog("open");
-			          	    	   
-		          	       		}); 
-	            		 $("#idUpdating").val(idvar);
-	
-	            	     $("#dialogForUpdating").dialog("open");
+            			 alert(idvar + "   "+ entitevar);
+            		 	 $("#submitDeleting").show();
+	            	     $("#deleting").dialog("open");
             		 });
             	
             	

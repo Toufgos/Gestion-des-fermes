@@ -21,6 +21,9 @@
             $( "#waiting" ).dialog({
                 autoOpen: false,  
              });
+            $("#deleting")dialog({
+            	autoOpen: false,
+            });
          });
       </script>
 		
@@ -128,14 +131,18 @@
 										</div>
 			<br/>	
 			<button id="submitUpdating">Modifier</button>
-			<button  id="submitDeleting">Supprimer</button>
+			
 		</div>
 		<div id="waiting" title="wait please !">
 				<p>Please wait</p>
 			<img class="test" src="http://loadingapng.com/templates/4/preview.gif" alt="waiting" width="100" height="100">
 		</div>
-                    </div>
+		    </div>
                 </div>
+           <div id="deleting" title="suppression" >
+			<p>vous êtes sûres que vous voulez supprimer ce mode d'irriguation ? </p>
+			<button  id="submitDeleting">Supprimer</button>
+		</div>
                 
                 <script>
             $(document).ready(function () {
@@ -206,19 +213,14 @@
             		 var idvar= $("#idUpdating").val();
             		 var entitevar="Mode";
             		 $("#dialogForUpdating").dialog("close");
-            		 $("#waiting").dialog("open");
+            		 //$("#waiting").dialog("open");
             		 
-            		 $.get('UpdateEntite', {
+            		 $.get('RemoveEntite', {
             	            id : idvar,
             	            entite : entitevar,
-            	            libelle : $("#nom").val(),
-            	            observation :  $("#description").val(),
+            	           
             	       }, function(response) {
             	    	   alert(response);
-            	    	  /*  var res=response.split(":");
-            	    	   $("#example").append('<tr><td class=" ">'+res[0]+'</td> <td class=" ">'+res[1]+'</td></tr>');
-            	    	   */
-            	  	//PNotify.removeAll();
             	       });
             		 $("#waiting").dialog("close");
             		 location.reload();
@@ -226,8 +228,8 @@
             	 $("#submitDeleting").click(function(event){
             		 var idvar= $("#idUpdating").val();
             		 var entitevar="Mode";
-            		 $("#dialogForUpdating").dialog("close");
-            		 $("#waiting").dialog("open");
+            		// $("#dialogForUpdating").dialog("close");
+            		// $("#waiting").dialog("open");
             		//alert(idvar+" "+entitevar);	
             		 $.get('RemoveEntite', {
             	            id : idvar,
@@ -238,15 +240,19 @@
             	    	   
             	  	//PNotify.removeAll();
             	       }); 
-            		 $("#waiting").dialog("close");
+            		 $("#deleting").dialog("close");
             		 location.reload();
             		 });
             	 $(".remove").click(function(event){
             		 var idvar= $(this).prop("value");
             		 var entitevar="Mode";
+            		 
             		 $("#submitDeleting").show();
             		 $("#submitUpdating").hide();
-            		    $("#dialogForUpdating").append('<img class="test" src="http://loadingapng.com/templates/4/preview.gif" alt="Smiley face" width="42" height="42">');
+            		 
+            		 $("#deleting").dialog("open");
+            		 alert("7tal hna khdam");
+            		    /* $("#dialogForUpdating").append('<img class="test" src="http://loadingapng.com/templates/4/preview.gif" alt="Smiley face" width="42" height="42">');
             		 
 	       	    	    $("#libelleUpdating").hide();
 	       	    	    $("#observationUpdating").hide();
@@ -272,10 +278,10 @@
 					       	    	$("img").remove(".test");
 			          	    	   $("#dialogForUpdating").dialog("open");
 			          	    	   
-		          	       		}); 
-	            		 $("#idUpdating").val(idvar);
+		          	       		}); */
+	            		 $("#idUpdating").val(idvar); 
 	            		 
-	            	     $("#dialogForUpdating").dialog("open");
+	            	     
             		 });
             	
             	
