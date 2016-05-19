@@ -140,4 +140,14 @@
     <servlet-name>AjoutLigneMouvementProduitAjax</servlet-name>
     <url-pattern>/AjoutLigneMouvementProduitAjax</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChartsAjaxing</display-name>
+    <servlet-name>ChartsAjaxing</servlet-name>
+    <servlet-class>si.smart.ferme.servlets.ChartsAjaxing</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChartsAjaxing</servlet-name>
+    <url-pattern>/ChartsAjaxing</url-pattern>
+  </servlet-mapping>
 </web-app>

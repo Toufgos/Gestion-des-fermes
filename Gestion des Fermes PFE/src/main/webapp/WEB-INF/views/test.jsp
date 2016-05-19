@@ -132,6 +132,7 @@
           ['Sleep',    7.1]
         ]);
 		*/
+	
 		var data = google.visualization.arrayToDataTable([
 			['Task', 'Hours per Day'],
 			<c:forEach items="${data}" var="d">
@@ -151,6 +152,7 @@
     <script type="text/javascript">
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
+    	alert();
       var data = google.visualization.arrayToDataTable([
         ['jour', 'température', 'eau'],
         ['1/01', 20, 12], ['2/01', 20, 12], ['3/01', 7, 12], ['4/01', 20, 12],['5/01', 26, 1],

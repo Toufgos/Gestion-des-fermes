@@ -721,6 +721,11 @@ public class EmployeController {
 	public String listerProduits(Model model, HttpServletRequest request, HttpSession session){
 		List<Produit> produits= metier.FindAllProduit();
 		model.addAttribute("produits", produits);
+		Map<String, String> res= new HashMap<String, String>();
+		for (Produit p : produits) {
+			res.put(p.getLibelle(), ""+p.getQuantiteEnStock());
+		}
+		model.addAttribute("data", res);
 		return "listerProduits";
 	}
 	

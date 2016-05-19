@@ -1,13 +1,15 @@
-<%@include file="menu.jsp" %>
+<%@include file="menu.jsp"%>
 <!DOCTYPE html>
 <% session.setAttribute("page","listerClimatFamilles");%>
 <!-- PNotify -->
-    <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/notify/pnotify.core.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/notify/pnotify.buttons.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/notify/pnotify.nonblock.js"></script>
- 
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/notify/pnotify.core.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/notify/pnotify.buttons.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/notify/pnotify.nonblock.js"></script>
 <!-- /page content -->
-		<!-- CSS -->
+<!-- CSS -->
 <style>
 .ui-widget-header, .ui-state-default, ui-button {
 	background: #b9cd6d;
@@ -17,6 +19,8 @@
 }
 </style>
 <!-- Javascript -->
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
          $(function() {
             $( "#dialogForUpdating" ).dialog({
@@ -30,131 +34,188 @@
             });
          });
       </script>
-		
-		<script src="<%=request.getContextPath()%>/resources/js/datatables/js/jquery.dataTables.js"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/datatables/tools/js/dataTables.tableTools.js"></script>
-		
-		<div class="right_col" role="main">
-		
-                    <div class="page-title">
-                       
-                    </div>
-                    <div class="clearfix"></div>
 
-                    <div class="row">
+<script
+	src="<%=request.getContextPath()%>/resources/js/datatables/js/jquery.dataTables.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/js/datatables/tools/js/dataTables.tableTools.js"></script>
 
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>Voici la liste des Climatologies <small></small></h2>
-                                    
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                    <table id="example" class="table table-striped responsive-utilities jambo_table">
-                                        <thead>
-                                            <tr class="headings">
-                                               
-                                                <th>Ferme </th>
-                                                <th>Date </th>
-                                                <th>Temperature(moyenne) </th>
-                                                <th>précipitations_de_pluie en Mm/Ferme </th>
-                                                
-                                                <th class=" no-link last"><span class="nobr">Action</span>
-                                                </th>
-                                            </tr>
-                                        </thead>
-										
-                                        <tbody>
-                                        
-                                        	<c:forEach items="${climatologies }" var="li">
-                                        	<tr>
-                                        	
-                                        		<td class=" ">${li.ferme.nom_Ferme }</td>
-                                        		
-                                                <td class=" ">${li.date } </td>
-                                                
-                                                <td class=" ">${li.temperature } </td>
-                                                
-                                                <td class=" ">${li.pluie } </td>
-                                                <td class=" last">
+<div class="right_col" role="main">
 
-												<button type="button" value="${li.id }" 
+	<div class="page-title"></div>
+	<div class="clearfix"></div>
+	<div>
+		<select id="frm">
+			<c:forEach items="${fermes }" var="f">
+				<option value="${f.id_Ferme }">${f.nom_Ferme }</option>
+			</c:forEach>
+		</select>
+		<div id="chart_div2" style="width: 900px; height: 500px;"></div>
+	</div>
+	<div class="row">
+
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>
+						Voici la liste des Climatologies <small></small>
+					</h2>
+
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<table id="example"
+						class="table table-striped responsive-utilities jambo_table">
+						<thead>
+							<tr class="headings">
+
+								<th>Ferme</th>
+								<th>Date</th>
+								<th>Temperature(moyenne)</th>
+								<th>précipitations_de_pluie en Mm/Ferme</th>
+
+								<th class=" no-link last"><span class="nobr">Action</span>
+								</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<c:forEach items="${climatologies }" var="li">
+								<tr>
+
+									<td class=" ">${li.ferme.nom_Ferme }</td>
+
+									<td class=" ">${li.date }</td>
+
+									<td class=" ">${li.temperature }</td>
+
+									<td class=" ">${li.pluie }</td>
+									<td class=" last">
+
+										<button type="button" value="${li.id }"
 											class="btn update btn-xs do">
 											<i class="fa"> </i> <i class="fa fa-wrench"></i>
 
 										</button>
-										<button type="button" value="${li.id }" 
+										<button type="button" value="${li.id }"
 											class="btn remove  btn-xs do">
 											<i class="fa"> </i> <i class="fa fa-times"></i>
 
-										</button> 
+										</button>
+								</tr>
+							</c:forEach>
 
-                                        	</tr>
-                                        	</c:forEach>
-                                         
-                                        </tbody>
+						</tbody>
 
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+					</table>
+				</div>
+			</div>
+		</div>
 
-                        <br />
-                        <br />
-                        <br />
-						<div id="dialogForUpdating" title="Modification d'une Activité "
+		<br /> <br /> <br />
+		<div id="dialogForUpdating" title="Modification d'une climatologie "
 			style="display: table-cell; vertical-align: middle; text-align: center">
 
-			<input type="hidden" value="" id="idUpdating" /> 
-			
-									<table>
-									<tr>
-									 <td> <label>Ferme</label></td>
-									<td>	
-										<select name="ferme" id="ferme">
-											<c:forEach items="${fermes }" var="f" >
-												<option value="${f.id_Ferme }" >${f.nom_Ferme }</option>
-											</c:forEach>
-										</select>
-									</td>
-									</tr>
-									<tr>	
-										<td><label>Temperature</label></td>
-										<td><input type="number" id="temperature" name="temperature"  /></td>
-									</tr>
-									<tr>	
-										<td><label>Date</label></td>
-										<td><input type="date" id="date" name="date" /></td> 
-									</tr>
-									<tr>	
-										<td><label>Pluie</label></td>
-										<td><input type="number" id="pluie" name="pluie" /></td>
-									</tr>	
-									</table>
-									
-								
-			<br/>	
+			<input type="hidden" value="" id="idUpdating" />
+
+			<table>
+				<tr>
+					<td><label>Ferme</label></td>
+					<td><select name="ferme" id="ferme">
+							<c:forEach items="${fermes }" var="f">
+								<option value="${f.id_Ferme }">${f.nom_Ferme }</option>
+							</c:forEach>
+					</select></td>
+				</tr>
+				<tr>
+					<td><label>Temperature</label></td>
+					<td><input type="number" id="temperature" name="temperature" /></td>
+				</tr>
+				<tr>
+					<td><label>Date</label></td>
+					<td><input type="date" id="date" name="date" /></td>
+				</tr>
+				<tr>
+					<td><label>Pluie</label></td>
+					<td><input type="number" id="pluie" name="pluie" /></td>
+				</tr>
+			</table>
+
+
+			<br />
 			<button id="submitUpdating">Modifier</button>
-			
+
 		</div>
 		<div id="waiting" title="wait please !">
-				<p>Please wait</p>
-			
+			<p>Please wait</p>
+
 		</div>
 		<div id="removing" title="suppression">
-			<p> vous êtes sûr de supprimer cette climat ? </p>
-			<input type="hidden" value="" id="idtodelete" /> 
-			<button  id="submitDeleting">Supprimer</button>
+			<p>vous êtes sûr de supprimer cette climat ?</p>
+			<input type="hidden" value="" id="idtodelete" />
+			<button id="submitDeleting">Supprimer</button>
 		</div>
-                    </div>
-                </div>
-                
-            <script>
+	</div>
+</div>
+
+
+<script>
             $(document).ready(function () {
             	
             	//$("#waiting").hide();
             	
+            	$("#frm").change(function(event){
+            		alert($("#frm").val());
+            		var idvar=$("#frm").val().trim();
+            		
+            		$.get('ChartsAjaxing', {
+          	            id : idvar,
+          	            
+      	            
+		          	       }, function(response) {
+		          	    	   alert(response);
+		          	    	  var tab= [ ['jour', 'température', 'eau'] ];
+		          	    	 var res=response.split(";");
+		          	    	for(var i = 0 ; i < res.length ; i++){
+		          	    		var res2=res[i].split(":");
+		          	    		//alert(res2[0]+' '+res2[1]+' '+res2[2]);
+		          	    		tab.push([res2[0],parseFloat(res2[1]),parseFloat(res2[2])]);
+		          	    		
+		          	    	}
+		          	    	alert("tab :"+ tab);
+		          	    	 google.charts.setOnLoadCallback(drawChart);
+		          	    	 google.charts.load('current', {'packages':['corechart']});
+		          	       function drawChart() {
+		          	    	 var data = new google.visualization.arrayToDataTable(tab);
+		          	    	/* data.addColumn('string', 'Date');
+		          	    	data.addColumn('number', 'Pluie');
+		          	    	data.addColumn('number', 'Température');
+		          	    	alert(tab[1][1]+"  "+ tab[1][2]);
+		          	    	data.addRows([
+		          	    	  ['Work', parseFloat(tab[1][1]), parseFloat(tab[1][2])],
+		          	    	  ['Eat', 13, 2.2],
+		          	    	  ['Commute', 2, 7],
+		          	    	  ['Watch TV', 2, 8],
+		          	    	  ['Sleep', {v:7, f:'7.000'}, 100]
+		          	    	]); */
+		          	         var options = {
+		          	           title: 'température & Pluie',
+		          	           curveType: 'function',
+		          	           legend: { position: 'bottom' }
+		          	         };
+
+
+		          	         var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+		          	         chart.draw(data, options);
+		          	       }
+		          	    
+	          	       		}); 
+        		
+            	});
+            	
+            	
+               
             	
             	 $(".update").click(function(event){
             		 
@@ -292,7 +353,7 @@
                 });
             });
         </script>
-                 <!-- Datatables -->
-        
-	<%@include file="footer.jsp" %>	
-		
+<!-- Datatables -->
+
+<%@include file="footer.jsp"%>
+

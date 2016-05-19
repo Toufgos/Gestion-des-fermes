@@ -17,7 +17,40 @@
 }
 </style>
 <!-- Javascript -->
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+/*
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11.2],
+          ['Eat',      2.4],
+          ['Commute',  2.3],
+          ['Watch TV', 2.9],
+          ['Sleep',    7.1]
+        ]);
+		*/
+		var data = google.visualization.arrayToDataTable([
+			['Task', 'Hours per Day'],
+			<c:forEach items="${data}" var="d">
+			['${d.key}',    parseFloat('${d.value}')],
+			</c:forEach>
+		]); 
+        var options = {
+          title: 'quatité de produit dans le stock',
+          pieHole: 0.5,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+        $("#piechart").hide();
+      }
+    </script>
 <script>
+	
          $(function() {
             $( "#dialogForUpdating" ).dialog({
                autoOpen: false,  
@@ -30,6 +63,26 @@
             });
          });
       </script>
+    <script type="text/javascript">
+    
+    $(document).ready(function () {
+    	
+	    $("#lll").click(function(event){
+	    	
+	    	if( $("#piechart").is(":visible")  ){
+	    		$("#piechart").hide();
+	    	}
+	    	else 
+	    		$("#piechart").show();
+	    	
+	    		
+	    	
+			
+			
+		});
+	   
+    });
+</script>  
 		
 		<script src="<%=request.getContextPath()%>/resources/js/datatables/js/jquery.dataTables.js"></script>
         <script src="<%=request.getContextPath()%>/resources/js/datatables/tools/js/dataTables.tableTools.js"></script>
@@ -42,14 +95,18 @@
                        
                     </div>
                     <div class="clearfix"></div>
-
+                    
+					<div id="piechart" style="width: 900px; height: 500px;">
+						
+					</div>
+					
                     <div class="row">
 
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
 									<h2>
-										Voici la liste des produits  <small> ! </small>
+										Voici la liste des produits  <small> <button id="lll" class="follow">afficher en graphique</button> </small>
 									</h2>
 
 									<div class="clearfix"></div>
@@ -83,7 +140,7 @@
 													<td class=" ">${li.libelle }</td>
 													<td class=" ">${li.categorie.nom }</td>
 													<td class=" ">${li.pu }</td>
-													<td class=" ">${li.libelle }</td>
+													<td class=" ">${li.CMUPunitare }</td>
 													<td class=" ">${li.quantiteEnStock }</td>
 													<td class=" ">${li.quantiteMinAuStock }</td>
 													<td class=" ">${li.descreption }</td>
