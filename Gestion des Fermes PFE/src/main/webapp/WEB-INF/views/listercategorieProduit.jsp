@@ -42,7 +42,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Voici la liste des Fermes <small></small></h2>
+                                    <h2>Voici la liste des Catégories des Produits <small></small></h2>
                                     
                                     <div class="clearfix"></div>
                                 </div>
@@ -63,10 +63,10 @@
 										
                                         <tbody>
                                         
-                                        	<c:forEach items="${Modes }" var="li">
+                                        	<c:forEach items="${cats }" var="li">
                                         	<tr>
                                         	
-                                        		<td class=" ">${li.nom_mode}</td>
+                                        		<td class=" ">${li.nom}</td>
                                         		
                                                 <td class=" ">${li.description } </td>
                                                 
@@ -75,18 +75,18 @@
 
 													<f:form modelAttribute="ff" action="coorMaps" method="post">
 														<input name="id_Ferme" id="id_Ferme"
-															value="${li.id_mode }" type="hidden" />
+															value="${li.id }" type="hidden" />
 														<button type="submit" class="btn  btn-xs do">
 															<i class="fa"> </i> <i class="fa fa-home"></i>
 															Afficher
 														</button>
 													</f:form>
-													<button type="button" value="${li.id_mode }" 
+													<button type="button" value="${li.id }" 
 											class="btn update btn-xs do">
 											<i class="fa"> </i> <i class="fa fa-wrench"></i>
 
 										</button>
-										<button type="button" value="${li.id_mode }" 
+										<button type="button" value="${li.id }" 
 											class="btn remove  btn-xs do">
 											<i class="fa"> </i> <i class="fa fa-times"></i>
 
@@ -105,7 +105,7 @@
                         <br />
                         <br />
                         <br />
-						<div id="dialogForUpdating" title="Modification d'une Activité "
+					<!-- 	<div id="dialogForUpdating" title="Modification d'une Activité "
 			style="display: table-cell; vertical-align: middle; text-align: center">
 
 			<input type="hidden" value="" id="idUpdating" />
@@ -142,7 +142,7 @@
            <div id="deleting" title="suppression" >
 			<p>vous êtes sûres que vous voulez supprimer ce mode d'irriguation ? </p>
 			<button  id="submitDeleting">Supprimer</button>
-		</div>
+		</div> -->
                 
                 <script>
             $(document).ready(function () {

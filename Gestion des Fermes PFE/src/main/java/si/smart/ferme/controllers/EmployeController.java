@@ -3,6 +3,7 @@ package si.smart.ferme.controllers;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,11 @@ import si.smart.ferme.entities.Climatologie;
 import si.smart.ferme.entities.Culture;
 import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
+import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.LigneMouvementProduit;
 import si.smart.ferme.entities.ModeIrreguation;
+import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.ParcellaireIrregue;
@@ -34,14 +38,18 @@ import si.smart.ferme.entities.Personnel;
 import si.smart.ferme.entities.Plantation;
 import si.smart.ferme.entities.Produit;
 import si.smart.ferme.entities.SousFamille;
+import si.smart.ferme.entities.Traitement;
 import si.smart.ferme.entities.Variete;
 import si.smart.ferme.metier.Metier;
 import si.smart.ferme.metier.MetierImp;
 import si.smart.ferme.models.ClimatologieForm;
 import si.smart.ferme.models.FamilleForm;
 import si.smart.ferme.models.FermeForm;
+import si.smart.ferme.models.FournisseurForm;
+import si.smart.ferme.models.MouvementForm;
 import si.smart.ferme.models.OccupationForm;
 import si.smart.ferme.models.ParcellaireFomr;
+import si.smart.ferme.models.TraitementForm;
 
 @Controller
 public class EmployeController {
@@ -50,9 +58,17 @@ public class EmployeController {
 	private Metier metier;
 	
 	
+	public static boolean exist(List<Produit> l, Produit P ){
+		
+		for(Produit p : l ){
+			if(p.getId()==P.getId())
+				return true;
+		}
+		
+		return false;
+	}
 	
 	
-
 	
 	@RequestMapping(value={"listerActivites" , "/admin/listerActivites" })
 	public String listerActivites(Model model, HttpServletRequest request, HttpSession session){
@@ -296,7 +312,7 @@ public class EmployeController {
 //			return "home";
 //		}
 		//model.addAttribute("AdminForm",new AdminForm());
-		return "home"; 
+		return "login"; 
 		
 	}
 	
@@ -306,9 +322,18 @@ public class EmployeController {
 //			return "home";
 //		}
 		//model.addAttribute("AdminForm",new AdminForm());
+		
+		List<Produit> produits= metier.FindAllProduit();
+		Map<String, String> res= new HashMap<String, String>();
+		for (Produit p : produits) {
+			res.put(p.getLibelle(), ""+p.getQuantiteEnStock());
+		}
+		model.addAttribute("data", res);
 		return "test"; 
 		
 	}
+	
+	
 	
 	@RequestMapping(value="/ajoutFerme")
 	public String ajoutFerme(Model model , FermeForm fff , HttpServletRequest request, HttpSession session){
@@ -594,7 +619,7 @@ public class EmployeController {
 		return "CoorParcelle";
 	}
 	
-	@RequestMapping("/admin/ajouterActivite")
+	@RequestMapping(value={"ajouterActivite" ,"/admin/ajouterActivite"})
 	public String ajouterActivite(Model model, FamilleForm ff , HttpServletRequest request, HttpSession session ){
 		model.addAttribute("ff", new FamilleForm());
 		
@@ -701,7 +726,7 @@ public class EmployeController {
 	
 	@RequestMapping("/ajouterVariete")
 	public String ajouterVariete(Model model, HttpServletRequest request, FamilleForm ff , HttpSession session ){
-		model.addAttribute("ff", new FamilleForm());
+		//model.addAttribute("ff", new FamilleForm());
 		List<SousFamille> sous= metier.FindAllSousFamilles();
 		model.addAttribute("ss", sous);
 		try {
@@ -718,6 +743,189 @@ public class EmployeController {
 		
 		return "ajouterVariete";
 	}
+	
+	@RequestMapping("/AjoutFournisseur")
+	public String AjoutFournisseur(Model model, FournisseurForm ff, HttpServletRequest request, HttpSession session){
+		
+		model.addAttribute("ff", new FournisseurForm());
+		try {
+			if(ff.getSubmit().equals("Ajouter")){
+				ff.setSubmit(null);
+				Fournisseur f = new Fournisseur(ff.getNom(), ff.getAdresse());
+				f.setEmail(ff.getEmail());
+				f.setTel(ff.getTel());
+				f.setType(ff.getType());
+				System.out.println(ff.getType());
+				System.out.println(f.getNom()+f.getAdresse()+f.getTel());
+				metier.add(f);
+				
+			}
+		} catch (Exception e) {
+			
+		}
+		return "AjoutFournisseur";
+	}
+	
+	@RequestMapping("/listerFournisseurs")
+	public String listerFournisseurs(Model model, HttpServletRequest request){
+		
+		List<Fournisseur> res=metier.FindAllFournisseur();
+		List<Fournisseur> resF=metier.FindAllFournisseurSeulement();
+		List<Fournisseur> resC=metier.FindAllFournisseurClientSeulement();
+		model.addAttribute("res", res);
+		model.addAttribute("resF", resF);
+		model.addAttribute("resC", resC);
+		return "listerFournisseurs";
+		
+	}
+	@RequestMapping("/listerMouvements")
+	public String listerMouvements(Model model, HttpServletRequest request){
+		
+		List<Mouvement> res=metier.FindAllMouvementEntrees();
+		List<Mouvement> resF=metier.FindAllMouvementSorties();
+		List<Mouvement> resC=metier.FindAllMouvementDepreciation();
+		model.addAttribute("res", res);
+		model.addAttribute("resF", resF);
+		model.addAttribute("resC", resC);
+		return "listerMouvements";
+		
+	}
+	
+	@RequestMapping("/AjoutMouvement")
+	public String AjoutMouvement(Model model, MouvementForm cf ,HttpServletRequest request, HttpSession session){
+		model.addAttribute("cf", new MouvementForm());
+		List<Ferme> fermes = metier.FindAllFerme();
+		model.addAttribute("fermes", fermes);
+		try{
+			if(cf.getSubmit().equals("ajouterMouvement")){
+				Mouvement m = new Mouvement(cf.getNum(), cf.getDate(), cf.getRef(), cf.getType());
+				Ferme f = metier.FindFermeById(cf.getFerme());
+				metier.add(m,f);
+			}
+		}
+		catch (Exception e ){
+			System.out.println(e.getMessage());
+		}
+		return "AjoutMouvement";
+	}
+	@RequestMapping("/AjoutCategorieProduit")
+	public String AjoutCategorieProduit(Model model,FamilleForm ff ,HttpServletRequest request, HttpSession session){
+			
+		model.addAttribute("ff", new FamilleForm());
+		
+		try {
+			
+			if(ff.getSubmit().equals("AjouterMode")){
+				ff.setSubmit(null);
+				//ModeIrreguation mode= new ModeIrreguation();
+				CategorieProduit c= new CategorieProduit(ff.getLibelle(), ff.getDescription());
+				metier.add(c);
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "AjoutCategorieProduit";
+	}
+	
+	@RequestMapping("/listercategorieProduit")
+	public String  listercategorieProduit(Model model,HttpServletRequest request ){
+		
+		List<CategorieProduit> cats= metier.FindAllCategorieProduit();
+		model.addAttribute("cats", cats);
+		return "listercategorieProduit";
+	}
+	
+	
+	@RequestMapping("/AjoutTraitement")
+	public String AjoutTraitement(Model model, TraitementForm tf , HttpServletRequest request, HttpSession session){
+		
+		model.addAttribute("tf", new TraitementForm());
+		List<Produit> produits=metier.FindAllProduit();
+		List<Parcellaire> parcellaires=metier.findAllParcelles();
+		model.addAttribute("produits", produits);
+		model.addAttribute("parcellaires", parcellaires);
+		try{
+			System.out.println(tf.getSubmit());
+			if(tf.getSubmit().equals("Ajouter")){
+				tf.setSubmit(null);
+				System.out.println("step 1 ");
+				Traitement t = new Traitement(tf.getDate(), tf.getQte());
+				System.out.println("step 2 ");
+				Parcellaire p= metier.findParcellaireById(tf.getParce());
+				Produit prod= metier.FindProduitById(tf.getProd());
+				System.out.println("step 3 ");
+				metier.add(t, prod, p);
+				System.out.println("step 4 ");
+				return "listTraitement";
+			}
+		}catch(Exception e){
+			System.out.println("EXCEPTION FOUND : "+e.getMessage());
+		}
+		return "AjoutTraitement";
+	}
+	
+	@RequestMapping("/listTraitement")
+	public String listTraitement(Model model, HttpServletRequest request){
+		List<Traitement> traitements = metier.FindAllTraitement();
+		System.out.println(traitements.size());
+		model.addAttribute("traitements", traitements);
+		return "listTraitement";
+	}
+	
+	@RequestMapping("/AjoutLigneMouvementProduit")
+	public String AjoutLigneMouvementProduit(Model model, MouvementForm mf , HttpServletRequest request, HttpSession session){
+		// null;
+		try {
+			long a = mf.getFerme(); // ici ferme représente l'id du mouvement
+			//System.out.println("voici l id du mouvement : "+a);
+			Mouvement m = metier.FindMouvementById(a);
+			System.out.println("ref du mouvement : "+m.getReference());
+		List<Mouvement> mouvements= metier.FindAllMouvement();
+		List<Produit> Allproduits= metier.FindAllProduit();
+		List<Produit> produits= new ArrayList<Produit>();
+		List<Produit> produitsInMov= new ArrayList<Produit>();
+		List<LigneMouvementProduit> ligne= metier.FindAllLigneMouvementProduit();
+		List<Fournisseur> fournisseurs=metier.FindAllFournisseurSeulement();
+		//Mouvement m= metier.FindMouvementById(1L);
+		List<LigneMouvementProduit> mov=metier.FindAllLigneMouvementProduitByMouvement(m);
+		for (LigneMouvementProduit l : mov) {
+			if(! exist(produitsInMov, l.getProduit()))
+				produitsInMov.add(l.getProduit());
+		}
+		System.out.println(" le mouvement "+m.getReference()+" contient les produits suviants : ");
+		for (Produit p : produitsInMov) {
+			//System.out.println(p.getId()+" : "+p.getLibelle()+" ;");
+		}
+		for (Produit l : Allproduits) {
+			if(! exist(produitsInMov, l) ){
+				produits.add(l);
+				//System.out.println("le produit : "+l.getLibelle()+" est ajouté à la liste des produits");
+			}
+				
+		}
+		
+		model.addAttribute("fournisseurs", fournisseurs);
+		model.addAttribute("mouvements",mouvements);
+		model.addAttribute("produits",produits);
+		model.addAttribute("ligne", ligne);
+		model.addAttribute("mov", mov);
+		model.addAttribute("m", m);
+//		model.addAttribute("msgCmup", "le prix de sortie n'est pas le même que le cmup !");
+//		model.addAttribute("qte", "la quantité demandée pour la sortie est plus grande que celle dans le stock");
+//		
+		return "AjoutLigneMouvementProduit";
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "";
+		}
+		
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/login")
 	public String login(Model model, HttpServletRequest request, HttpSession session){

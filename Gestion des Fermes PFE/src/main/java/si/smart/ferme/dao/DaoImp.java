@@ -24,6 +24,7 @@ import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
 import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.LigneMouvementProduit;
 import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
@@ -47,6 +48,7 @@ import si.smart.ferme.entitiesHistory.ParcellaireHistory;
 import si.smart.ferme.entitiesHistory.PersonnelHistory;
 import si.smart.ferme.entitiesHistory.SousFamilleHistory;
 import si.smart.ferme.entitiesHistory.VarieteHistory;
+import si.smart.ferme.metier.Metier;
 
 @Repository
 public class DaoImp implements Dao{
@@ -1595,6 +1597,156 @@ public class DaoImp implements Dao{
 		return s;
 	}
 
+	@Override
+	public List<Fournisseur> FindAllFournisseurSeulement() {
+		Query req= em.createQuery("select f From Fournisseur f WHERE f.type = ?");
+		req.setParameter(1, "Fournisseur");
+		return req.getResultList();
+	}
+
+	@Override
+	public List<Fournisseur> FindAllFournisseurClientSeulement() {
+		Query req= em.createQuery("select f From Fournisseur f WHERE f.type = ?");
+		req.setParameter(1, "Client");
+		return req.getResultList();
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvementEntrees() {
+		Query req= em.createQuery("select f From Mouvement f WHERE f.Type = ?");
+		req.setParameter(1, "entree");
+		return req.getResultList();
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvementSorties() {
+		Query req= em.createQuery("select f From Mouvement f WHERE f.Type = ?");
+		req.setParameter(1, "sortie");
+		return req.getResultList();
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvementDepreciation() {
+		Query req= em.createQuery("select f From Mouvement f WHERE f.Type = ?");
+		req.setParameter(1, "depreciation");
+		return req.getResultList();
+	}
+	
+	public Produit actualiserProduit(LigneMouvementProduit l, Mouvement m,Produit p){
+		if(m.getType().equals("entree")){
+			double qteTotal=p.getQuantiteEnStock()+l.getQuantite();
+			double valeurStock=p.getQuantiteEnStock()*p.getCMUPunitare()+l.getQuantite()*l.getPrixUnitaire();
+			double cmup= 0.0;
+			if(qteTotal > 0) cmup= valeurStock/qteTotal;
+			p.setQuantiteEnStock(qteTotal);
+			p.setPu(l.getPrixUnitaire());
+			p.setCMUPunitare(cmup);
+			
+		}
+		if(m.getType().equals("sortie")){
+			double qteTotal=p.getQuantiteEnStock()-l.getQuantite();
+			if(qteTotal < 0.0) return null;
+			double valeurStock=p.getQuantiteEnStock()*p.getCMUPunitare()-l.getQuantite()*l.getProduit().getCMUPunitare();
+		//	double cmup=valeurStock/qteTotal;
+			p.setQuantiteEnStock(qteTotal);
+			p.setPu(l.getPrixUnitaire());
+		//	p.setCMUPunitare(cmup);
+				}
+		if(m.getType().equals("depreciation")){
+			double qteTotal=p.getQuantiteEnStock()-l.getQuantite();
+			if(qteTotal < 0.0) return null;
+			double valeurStock=p.getQuantiteEnStock()*p.getCMUPunitare()-l.getQuantite()*l.getProduit().getCMUPunitare();
+			//double cmup=0.0;
+			//if(qteTotal != 0) cmup= valeurStock/qteTotal;
+			p.setQuantiteEnStock(qteTotal);
+			p.setPu(l.getPrixUnitaire());
+			//p.setCMUPunitare(cmup);
+		}
+		return p;
+	}
+	
+	@Override
+	public LigneMouvementProduit add(LigneMouvementProduit l, Mouvement m, Produit p) {
+		m=em.find(Mouvement.class, m.getId());
+		p=em.find(Produit.class, p.getId());
+		l.setMouvement(m);
+		l.setProduit(p);
+		p=actualiserProduit(l,m,p);
+		em.persist(l);
+		em.merge(m);
+		em.persist(p);
+		System.out.println("DAO : "+l.getMontant()+"  "+m.getReference()+"    "+p.getLibelle());
+		return em.find(LigneMouvementProduit.class, l.getId());
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduit() {
+		Query req= em.createQuery("SELECT l FROM LigneMouvementProduit l");
+		return req.getResultList();
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitEntrees() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitSorties() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitDepreciation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LigneMouvementProduit FindLigneMouvementProduitById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LigneMouvementProduit update(LigneMouvementProduit l, Mouvement m, Produit p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String Remove(LigneMouvementProduit f) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(Produit p) {
+		Query req= em.createQuery("SELECT l FROM LigneMouvementProduit l where l.produit.id = ?");
+		req.setParameter(1, p.getId());
+		return req.getResultList();
+	}
+	
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(long  p) {
+		Query req= em.createQuery("SELECT l FROM LigneMouvementProduit l where l.produit.id = ?");
+		req.setParameter(1, p);
+		return req.getResultList();
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(Mouvement m) {
+		Query req= em.createQuery("SELECT l FROM LigneMouvementProduit l where l.mouvement.id = ?");
+		req.setParameter(1, m.getId());
+		return req.getResultList();
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(long m) {
+		Query req= em.createQuery("SELECT l FROM LigneMouvementProduit l where l.mouvement.id = ?");
+		req.setParameter(1, m);
+		return req.getResultList();
+	}
 
 
 

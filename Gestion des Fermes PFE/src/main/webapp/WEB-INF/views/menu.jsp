@@ -13,6 +13,7 @@
     <title>MyApplication| </title>
 
     <!-- Bootstrap core CSS -->
+    
 
     <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
 
@@ -239,6 +240,12 @@
                                         <li><a href="  <c:url value="listerClimat" />" >listerClimat</a>
                                         </li>
                                         
+                                        <li><a href="  <c:url value="AjoutTraitement" />" >AjoutTraitement</a></li>
+                                        <li><a href="  <c:url value="listTraitement" />" >listTraitement</a></li>
+                                        <li><a href="  <c:url value="AjoutCategorieProduit" />" >AjoutCategorieProduit</a></li>
+                                        <li><a href="  <c:url value="listercategorieProduit" />" >listercategorieProduit</a></li>
+                                        <li><a href="  <c:url value="ajouterProduit" />" >ajouter Produit</a></li>
+                                    	<li><a href="  <c:url value="listerProduits" />" >listerProduits</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -249,10 +256,15 @@
                              <ul class="nav side-menu">
                                 <li><a><i class="fa fa-bug"></i> Exemple Pages <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                    	<li><a href="  <c:url value="EtatSynthese" />" >Etat de synthèse</a>
-                                    	<li><a href="  <c:url value="ajouterProduit" />" >ajouter Produit</a>
-                                    	<li><a href="  <c:url value="listerProduits" />" >listerProduits</a>
+                                    	<li><a href="  <c:url value="EtatSynthese" />" >Etat de synthèse</a></li>
                                     	
+                                    	<li><a href="  <c:url value="AjoutFournisseur" />" >AjoutFournisseur</a></li>
+                                    	<li><a href="  <c:url value="listerFournisseurs" />" >lister Fournisseurs & Clients</a>
+                                        </li>
+                                    	<li><a href="  <c:url value="AjoutMouvement" />" >AjoutMouvement</a></li>
+                                    	<li><a href="  <c:url value="listerMouvements" />" >Lister les mouvement</a></li>
+                                    	
+                                    	<li><a href="  <c:url value="AjoutLigneMouvementProduit" />" >AjoutLigneMouvementProduit</a></li>
                                         <li><a href="  <c:url value="error404" />" >exemple</a>
                                         </li>
                                     </ul>
@@ -294,7 +306,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                   <span class="image fa-user" ></span>User Name
+                                   <span class="image fa-user" ></span>Admin
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">

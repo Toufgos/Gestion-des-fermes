@@ -132,7 +132,7 @@
                         <br />
                         <br />
                         <br />
-						<div id="dialogForUpdating" title="Modification d'une Activité "
+						<div id="dialogForUpdating" title="Modification d'un groupe "
 			style="display: table-cell; vertical-align: middle; text-align: center">
 
 			<input type="hidden" value="" id="idUpdating" /> <label class="hid">Libelle:</label>

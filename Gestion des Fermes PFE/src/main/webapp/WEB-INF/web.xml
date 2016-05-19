@@ -5,7 +5,10 @@
   </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath*:applicationContext*.xml</param-value>
+    <param-value>
+    classpath*:applicationContext*.xml
+    
+    </param-value>
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
@@ -127,5 +130,14 @@
     <servlet-name>etatSynthese</servlet-name>
     <url-pattern>/etatSynthese</url-pattern>
   </servlet-mapping>
- 
+  <servlet>
+    <description></description>
+    <display-name>AjoutLigneMouvementProduitAjax</display-name>
+    <servlet-name>AjoutLigneMouvementProduitAjax</servlet-name>
+    <servlet-class>si.smart.ferme.servlets.AjoutLigneMouvementProduitAjax</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjoutLigneMouvementProduitAjax</servlet-name>
+    <url-pattern>/AjoutLigneMouvementProduitAjax</url-pattern>
+  </servlet-mapping>
 </web-app>

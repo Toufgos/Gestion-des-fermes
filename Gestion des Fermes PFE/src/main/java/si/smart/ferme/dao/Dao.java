@@ -12,6 +12,7 @@ import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
 import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.LigneMouvementProduit;
 import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
@@ -85,6 +86,8 @@ public interface Dao {
  	
  	public Fournisseur add(Fournisseur f);
  	public List<Fournisseur> FindAllFournisseur();
+ 	public List<Fournisseur> FindAllFournisseurSeulement();
+ 	public List<Fournisseur> FindAllFournisseurClientSeulement();
  	public Fournisseur FindFournisseurById(long id);
  	public Fournisseur update(Fournisseur f);
  	public String Remove(Fournisseur f);
@@ -100,11 +103,26 @@ public interface Dao {
  	
  	public Mouvement add(Mouvement m, Ferme f);
  	public List<Mouvement> FindAllMouvement();
+ 	public List<Mouvement> FindAllMouvementEntrees();
+ 	public List<Mouvement> FindAllMouvementSorties();
+ 	public List<Mouvement> FindAllMouvementDepreciation();
  	public Mouvement FindMouvementById(long id);
  	public Mouvement update(Mouvement m, Ferme f);
  	public String Remove(Mouvement f);
  	
  	
+ 	public LigneMouvementProduit add(LigneMouvementProduit l, Mouvement m, Produit p);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduit();
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(Produit p);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(long  p);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(Mouvement m);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(long  m);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitEntrees();
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitSorties();
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitDepreciation();
+ 	public LigneMouvementProduit FindLigneMouvementProduitById(long id);
+ 	public LigneMouvementProduit update(LigneMouvementProduit l, Mouvement m, Produit p);
+ 	public String Remove(LigneMouvementProduit f);
  	
 	public Groupe update(Groupe g);
 	public Personnel update(Personnel g);

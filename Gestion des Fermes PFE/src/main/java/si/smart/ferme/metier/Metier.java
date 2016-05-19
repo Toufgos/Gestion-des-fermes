@@ -12,6 +12,7 @@ import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
 import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.LigneMouvementProduit;
 import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
@@ -82,6 +83,8 @@ public interface Metier {
  	
  	public Fournisseur add(Fournisseur f);
  	public List<Fournisseur> FindAllFournisseur();
+ 	public List<Fournisseur> FindAllFournisseurSeulement();
+ 	public List<Fournisseur> FindAllFournisseurClientSeulement();
  	public Fournisseur FindFournisseurById(long id);
  	public Fournisseur update(Fournisseur f);
  	public String Remove(Fournisseur f);
@@ -97,9 +100,19 @@ public interface Metier {
  	
  	public Mouvement add(Mouvement m, Ferme f);
  	public List<Mouvement> FindAllMouvement();
+ 	public List<Mouvement> FindAllMouvementEntrees();
+ 	public List<Mouvement> FindAllMouvementSorties();
+ 	public List<Mouvement> FindAllMouvementDepreciation();
  	public Mouvement FindMouvementById(long id);
  	public Mouvement update(Mouvement m, Ferme f);
  	public String Remove(Mouvement f);
+ 	
+ 	public LigneMouvementProduit add(LigneMouvementProduit l, Mouvement m, Produit p);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduit();
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(Produit p);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(long  p);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(Mouvement m);
+ 	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(long  m);
  	
  	
 	public Groupe update(Groupe g);

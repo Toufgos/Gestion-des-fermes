@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,6 +24,7 @@ import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
 import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.LigneMouvementProduit;
 import si.smart.ferme.entities.ModeIrreguation;
 import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
@@ -838,7 +840,75 @@ public class MetierImp implements Metier{
 	public String Remove(Mouvement f) {
 		// 
 		return dao.Remove(f);
-	}										
+	}	
+	
+	@Override
+	public List<Fournisseur> FindAllFournisseurSeulement() {
+		
+		return dao.FindAllFournisseurSeulement();
+	}
+
+	@Override
+	public List<Fournisseur> FindAllFournisseurClientSeulement() {
+		
+		return dao.FindAllFournisseurClientSeulement();
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvementEntrees() {
+		// 
+		return dao.FindAllMouvementEntrees();
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvementSorties() {
+		// 
+		return dao.FindAllMouvementSorties();
+	}
+
+	@Override
+	public List<Mouvement> FindAllMouvementDepreciation() {
+		
+		return dao.FindAllMouvementDepreciation();
+	}
+
+	@Override
+	public LigneMouvementProduit add(LigneMouvementProduit l, Mouvement m, Produit p) {
+		
+		System.out.println("Metier : "+l.getMontant()+"  "+m.getReference()+"    "+p.getLibelle());
+		return dao.add(l, m, p);
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduit() {
+		// 
+		return dao.FindAllLigneMouvementProduit();
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(Produit p) {
+		// 
+		return dao.FindAllLigneMouvementProduitByProduit(p);
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByProduit(long p) {
+		// 
+		return dao.FindAllLigneMouvementProduitByProduit(p);
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(Mouvement m) {
+		// 
+		return dao.FindAllLigneMouvementProduitByMouvement(m);
+	}
+
+	@Override
+	public List<LigneMouvementProduit> FindAllLigneMouvementProduitByMouvement(long m) {
+		// 
+		return dao.FindAllLigneMouvementProduitByMouvement(m);
+	}
+	
 
 //	public void setDao(Dao dao) {
 //		this.dao = dao;

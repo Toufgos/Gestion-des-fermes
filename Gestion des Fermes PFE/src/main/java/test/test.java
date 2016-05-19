@@ -21,7 +21,9 @@ import si.smart.ferme.entities.Famille;
 import si.smart.ferme.entities.Ferme;
 import si.smart.ferme.entities.Fournisseur;
 import si.smart.ferme.entities.Groupe;
+import si.smart.ferme.entities.LigneMouvementProduit;
 import si.smart.ferme.entities.ModeIrreguation;
+import si.smart.ferme.entities.Mouvement;
 import si.smart.ferme.entities.Occupation;
 import si.smart.ferme.entities.Parcellaire;
 import si.smart.ferme.entities.ParcellaireBour;
@@ -52,8 +54,16 @@ public class test {
 		System.out.println("hhhhhhhhhhhhhhhhhhhh");
 		Metier m = (Metier) context.getBean("metier");
 		
-		Traitement t= m.FindTraitementById(1L);
-		System.out.println(m.Remove(t));
+//		Produit p = m.FindProduitById(4L);
+//		Mouvement e=m.FindMouvementById(1L);
+//		Mouvement s=m.FindMouvementById(2L);
+//		/*
+//		LigneMouvementProduit l = new LigneMouvementProduit(100, 10, 0);
+//		m.add(l,e,p);
+//		*/
+//		LigneMouvementProduit  l = new LigneMouvementProduit(100, 10, 0);
+//		m.add(l,s,p);
+		
 		System.out.println("we are done !");
 		
 		

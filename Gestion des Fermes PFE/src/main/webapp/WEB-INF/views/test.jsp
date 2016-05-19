@@ -93,7 +93,7 @@
 			
 			 $.each($.parseJSON(json), function(idx, obj) {
 				 $("#res").append("<h1> "+idx+" </h1>");
-				 $("#res").append("<h4> "+obj.id+" : "+obj.Description +" </h14>");
+				 $("#res").append("<h4> "+obj.id+" : "+obj.Description +" </h4>");
 				});
 			
 		 });
@@ -117,8 +117,65 @@
        
 });
 	</script>
+	  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+/*
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11.2],
+          ['Eat',      2.4],
+          ['Commute',  2.3],
+          ['Watch TV', 2.9],
+          ['Sleep',    7.1]
+        ]);
+		*/
+		var data = google.visualization.arrayToDataTable([
+			['Task', 'Hours per Day'],
+			<c:forEach items="${data}" var="d">
+			['${d.key}',    parseFloat('${d.value}')],
+			</c:forEach>
+		]); 
+        var options = {
+          title: 'quatité de produit dans le stock',
+          pieHole: 0.5,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['jour', 'température', 'eau'],
+        ['1/01', 20, 12], ['2/01', 20, 12], ['3/01', 7, 12], ['4/01', 20, 12],['5/01', 26, 1],
+        ['6/01', 20, 12], ['9/01', 20, 12], ['12/01', 7, 12], ['15/01', 20, 12],['18/01', 26, 1],
+        ['7/01', 20, 12], ['10/01', 20, 12], ['13/01', 7, 12], ['16/01', 20, 12],['19/01', 26, 1],
+        ['8/01', 20, 12], ['11/01', 20, 12], ['14/01', 12, 12], ['17/01', 20, 12],['20/01', 26, 1],
+        ['21/01', 20, 12], ['23/01', 20, 12], ['25/01', 7, 12], ['27/01', 20, 12],['29/01', 26, 1],
+        ['22/01', 20, 12], ['24/01', 20, 12], ['26/01', 7, 12], ['28/01', 3, 20],['30/01', 26, 1],
+     ]);
+
+      var options = {
+        title: 'température Vs Pluie',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+      };
+
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+      chart.draw(data, options);
+    }
+    </script>
 </head>
 <body>
+ <div id="piechart" style="width: 900px; height: 500px;"></div>
+ <div id="chart_div2" style="width: 900px; height: 500px;"></div>
 <h1>Test réuissi :D l hamdolillah </h1>
 </body>
 <input type="button" id="btn" value="Click Me" />
@@ -130,5 +187,10 @@
 <div>Helllllllllllllllllllllll</div>
 
 	<a href="<c:url value="/ajoutFerme"/>">Ajout Ferme</a>
-	
+	<c:forEach items="${data}" var="d">
+			['${d.key}',     '${d.value}'],
+			</c:forEach>
 </html>
+
+
+

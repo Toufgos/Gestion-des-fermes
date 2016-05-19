@@ -23,7 +23,7 @@ import si.smart.ferme.metier.MetierImp;
 @Component
 public class TestCron {
 	
-	//@Autowired
+	@Autowired
 	private Metier metier;
 	
 
@@ -31,7 +31,8 @@ public class TestCron {
 
 	
 	//-------------> s  m   hr      jr/semaine
-	@Scheduled(cron="40 50 9-17 * * MON-FRI")
+	//@Scheduled(cron="40 30 10 * * MON-FRI")
+	@Scheduled(cron="20 13 11 * * *")
 	public synchronized void excute() {
 		
 		
